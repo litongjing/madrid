@@ -28,6 +28,6 @@ public class MadridApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(MadridApplication.class, args);
-        log.info("log4g & @Slf4j test:{}", "success");
+        log.info("log4g & @Slf4j :{}", "success");
     }
 }
