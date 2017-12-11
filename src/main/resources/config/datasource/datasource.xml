@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="GBK"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
@@ -7,10 +7,10 @@
        default-autowire="byName">
 
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-        <property name="driverClassName" value="@ds.driver@"/>
-        <property name="url" value="@ds.url@"/>
-        <property name="username" value="@ds.username@"/>
-        <property name="password" value="@ds.password@"/>
+        <property name="driverClassName" value="${ds.driver}"/>
+        <property name="url" value="${ds.url}"/>
+        <property name="username" value="${ds.username}"/>
+        <property name="password" value="${ds.password}"/>
         <property name="initialSize" value="5"/>
         <property name="minIdle" value="10"/>
         <property name="maxActive" value="30"/>
@@ -21,8 +21,8 @@
         <property name="maxWait" value="5000"/>
         <property name="minEvictableIdleTimeMillis" value="30000"/>
         <property name="timeBetweenEvictionRunsMillis" value="30000"/>
-        <!--ÒªÆôÓÃPSCache£¬±ØÐëÅäÖÃ´óÓÚ0£¬µ±´óÓÚ0Ê±£¬poolPreparedStatements×Ô¶¯´¥·¢ÐÞ¸ÄÎªtrue¡£ÔÚDruidÖÐ£¬²»»á´æÔÚOracleÏÂPSCacheÕ¼ÓÃÄÚ´æ¹ý¶àµÄÎÊÌâ£¬¿ÉÒÔ°ÑÕâ¸öÊýÖµÅäÖÃ´óÒ»Ð©£¬±ÈÈçËµ100 -->
-        <!--ÊÇ·ñ»º´æpreparedStatement£¬Ò²¾ÍÊÇPSCache¡£PSCache¶ÔÖ§³ÖÓÎ±êµÄÊý¾Ý¿âÐÔÄÜÌáÉý¾Þ´ó£¬±ÈÈçËµoracle¡£ -->
+        <!--è¦å¯ç”¨PSCacheï¼Œå¿…é¡»é…ç½®å¤§äºŽ0ï¼Œå½“å¤§äºŽ0æ—¶ï¼ŒpoolPreparedStatementsè‡ªåŠ¨è§¦å‘ä¿®æ”¹ä¸ºtrueã€‚åœ¨Druidä¸­ï¼Œä¸ä¼šå­˜åœ¨Oracleä¸‹PSCacheå ç”¨å†…å­˜è¿‡å¤šçš„é—®é¢˜ï¼Œå¯ä»¥æŠŠè¿™ä¸ªæ•°å€¼é…ç½®å¤§ä¸€äº›ï¼Œæ¯”å¦‚è¯´100 -->
+        <!--æ˜¯å¦ç¼“å­˜preparedStatementï¼Œä¹Ÿå°±æ˜¯PSCacheã€‚PSCacheå¯¹æ”¯æŒæ¸¸æ ‡çš„æ•°æ®åº“æ€§èƒ½æå‡å·¨å¤§ï¼Œæ¯”å¦‚è¯´oracleã€‚ -->
         <property name="maxPoolPreparedStatementPerConnectionSize" value="100"/>
 
         <property name="filters" value="config,stat"/>
