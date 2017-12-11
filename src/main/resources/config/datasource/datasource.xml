@@ -1,52 +1,53 @@
 <?xml version="1.0" encoding="GBK"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans-4.3.xsd"
+       http://www.springframework.org/schema/beans/spring-beans-4.3.xsd http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd"
        default-autowire="byName">
 
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
-        <property name="driverClassName" value="@ds.driver@" />
-        <property name="url" value="@ds.url@" />
-        <property name="username" value="@ds.username@" />
-        <property name="password" value="@ds.password@" />
-        <property name="initialSize" value="5" />
-        <property name="minIdle" value="10" />
-        <property name="maxActive" value="30" />
-        <property name="testWhileIdle" value="true" />
+        <property name="driverClassName" value="@ds.driver@"/>
+        <property name="url" value="@ds.url@"/>
+        <property name="username" value="@ds.username@"/>
+        <property name="password" value="@ds.password@"/>
+        <property name="initialSize" value="5"/>
+        <property name="minIdle" value="10"/>
+        <property name="maxActive" value="30"/>
+        <property name="testWhileIdle" value="true"/>
         <property name="validationQuery" value="select 1 from dual"/>
-        <property name="testOnBorrow" value="true" />
-        <property name="testOnReturn" value="false" />
-        <property name="maxWait" value="5000" />
-        <property name="minEvictableIdleTimeMillis" value="30000" />
-        <property name="timeBetweenEvictionRunsMillis" value="30000" />
+        <property name="testOnBorrow" value="true"/>
+        <property name="testOnReturn" value="false"/>
+        <property name="maxWait" value="5000"/>
+        <property name="minEvictableIdleTimeMillis" value="30000"/>
+        <property name="timeBetweenEvictionRunsMillis" value="30000"/>
         <!--要启用PSCache，必须配置大于0，当大于0时，poolPreparedStatements自动触发修改为true。在Druid中，不会存在Oracle下PSCache占用内存过多的问题，可以把这个数值配置大一些，比如说100 -->
         <!--是否缓存preparedStatement，也就是PSCache。PSCache对支持游标的数据库性能提升巨大，比如说oracle。 -->
-        <property name="maxPoolPreparedStatementPerConnectionSize" value="100" />
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="100"/>
 
-        <property name="filters" value="config,stat" />
+        <property name="filters" value="config,stat"/>
     </bean>
-    <!--<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">-->
-        <!--<property name="dataSource" ref="dataSource"/>-->
-        <!--<property name="typeAliasesPackage" value="com.intime.matrix.client.domain" />-->
-        <!--<property name="mapperLocations" value="classpath*:/mybatis/mapper/oracle/*mapper.xml" />-->
-        <!--<property name="configLocation" value="classpath:/mybatis/mybatis-config.xml"></property>-->
-    <!--</bean>-->
-    <!--<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">-->
-        <!--<property name="basePackage" value="com.intime.matrix.biz.mapper" />-->
-        <!--<property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryBean" />-->
-    <!--</bean>-->
-    <!--<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">-->
-        <!--<property name="dataSource" ref="dataSource" />-->
-    <!--</bean>-->
+    <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="typeAliasesPackage" value="com.domain"/>
+        <property name="mapperLocations" value="classpath*:config/mybatis/mapper/*mapper.xml"/>
+        <property name="configLocation" value="classpath:config/mybatis/mybatis-config.xml"></property>
+    </bean>
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryBean"/>
+    </bean>
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
 
-    <!--<bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">-->
-        <!--<property name="transactionManager" ref="transactionManager" />-->
-        <!--&lt;!&ndash;TransactionDefinition.ISOLATION_READ_COMMITTED&ndash;&gt;-->
-        <!--<property name="isolationLevel" value="2" />-->
-        <!--&lt;!&ndash;TransactionDefinition.PROPAGATION_REQUIRED&ndash;&gt;-->
-        <!--<property name="propagationBehavior" value="0" />-->
-    <!--</bean>-->
+    <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+        <property name="transactionManager" ref="transactionManager"/>
+        <!--TransactionDefinition.ISOLATION_READ_COMMITTED-->
+        <property name="isolationLevel" value="2"/>
+        <!--TransactionDefinition.PROPAGATION_REQUIRED-->
+        <property name="propagationBehavior" value="0"/>
+    </bean>
 
-    <!--<tx:annotation-driven transaction-manager="transactionManager" />-->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 </beans>

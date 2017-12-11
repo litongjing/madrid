@@ -19,6 +19,7 @@ public class MadridApplication {
     @Autowired
     EnvProperties envProperties;
 
+
     @RequestMapping("/status")
     public String status() {
         //当前环境
