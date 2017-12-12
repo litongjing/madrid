@@ -2,6 +2,7 @@ package com.domain.DO;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -10,7 +11,7 @@ import java.util.Date;
  * @Date:Create by 上午11:33 2017/12/11
  */
 @Data
-public class CouponDO {
+public class CouponDO implements Serializable {
     private String actionNo;
     private String extRule;
     private String payRule;
