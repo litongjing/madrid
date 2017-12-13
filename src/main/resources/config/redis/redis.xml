@@ -31,6 +31,12 @@
 
     <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
         <property name="connectionFactory" ref="JedisConnectionFactory"/>
+        <property name="keySerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+        </property>
+        <property name="valueSerializer">
+            <bean class="org.springframework.data.redis.serializer.JdkSerializationRedisSerializer"/>
+        </property>
         <!--<property name="defaultSerializer" ref="defaultRedisSerializer"/>-->
     </bean>
     <!-- spring自己的缓存管理器，这里定义了缓存位置名称 ，即注解中的value -->

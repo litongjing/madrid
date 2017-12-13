@@ -1,5 +1,6 @@
 package com.manager;
 
+import com.annotation.DataSource;
 import com.domain.DO.CouponDO;
 import com.domain.DTO.CouponDTO;
 import com.mapper.CouponMapper;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Component;
 public class CouponManager {
     @Autowired
     CouponMapper couponMapper;
-
+    @DataSource(value="coupon1")
     public CouponDO selectCoupon(CouponDTO couponDTO) {
         return couponMapper.selectCoupon(couponDTO);
     }

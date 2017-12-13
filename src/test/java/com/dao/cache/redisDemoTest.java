@@ -47,8 +47,8 @@ public class redisDemoTest {
         CouponDTO couponDTO = new CouponDTO();
         couponDTO.setCouponCode("5899937701012244");
         CouponDO couponDO = couponManager.selectCoupon(couponDTO);
-        redisTemplate.opsForValue().set("coupon3", couponDO);
-        System.out.println(redisTemplate.opsForValue().get("coupon3"));
+        redisTemplate.opsForValue().set("coupon6", couponDO);
+        System.out.println(redisTemplate.opsForValue().get("coupon6"));
 //        redisTemplate.expire("key", 10, TimeUnit.SECONDS);
     }
 
@@ -98,7 +98,7 @@ public class redisDemoTest {
     }
     @Test
     public void tes_124() throws InterruptedException {
-        RedisLock r=new RedisLock(redisTemplate,"coupon",1000,1000);
+        RedisLock r=new RedisLock(redisTemplate,"coupon10",1000,10000);
         r.lock();
         r.unlock();
     }
