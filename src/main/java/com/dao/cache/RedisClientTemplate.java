@@ -1483,7 +1483,6 @@ public class RedisClientTemplate {
         }
         boolean broken = false;
         try {
-
             result = shardedJedis.linsert(key, where, pivot, value);
 
         } catch (Exception e) {

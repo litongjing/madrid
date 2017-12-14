@@ -17,10 +17,11 @@
             location="classpath:filters/config.properties" order="0"/>
     <beans>
         <import resource="classpath:/config/datasource/datasource.xml"/>
+        <import resource="classpath:/config/timer.xml"/>
         <import resource="classpath:/config/redis/redis.xml"/>
         <import resource="classpath:/config/redis/jedis.xml"/>
         <bean id="envProperties" class="com.util.EnvProperties">
-            <property name="env" value="@env@"></property>
+            <property name="env" value="${env}"></property>
         </bean>
     </beans>
 </beans>

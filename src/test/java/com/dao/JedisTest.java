@@ -28,17 +28,19 @@ public class JedisTest {
     private Jedis jedis;
     @Autowired
     CouponManager couponManager;
+
     @Before
-    public void setup(){
+    public void setup() {
         jedis = new Jedis("192.168.130.7", 6379);
         jedis.auth("intimednb");
     }
+
     @Test
-    public void test_1(){
+    public void test_1() {
         CouponDTO couponDTO = new CouponDTO();
         couponDTO.setCouponCode("5899937701012244");
         CouponDO couponDO = couponManager.selectCoupon(couponDTO);
         jedis.set("coupon".getBytes(), SerializeUtil.serialize(couponDO));
-        System.out.println((CouponDO)SerializeUtil.unserialize(jedis.get("coupon".getBytes())));
+        System.out.println((CouponDO) SerializeUtil.unserialize(jedis.get("coupon".getBytes())));
     }
 }

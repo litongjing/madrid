@@ -2,6 +2,7 @@ package com.mapper;
 
 import com.domain.DO.CouponDO;
 import com.domain.DTO.CouponDTO;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * @Author:LiTongjing

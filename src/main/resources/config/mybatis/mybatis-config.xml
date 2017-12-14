@@ -15,7 +15,9 @@
 		<setting name="logImpl" value="STDOUT_LOGGING" />
 		<setting name="callSettersOnNulls" value="true"/>
 	</settings>
-
+	<typeAliases>
+		<typeAlias type="com.domain.DO.CouponDO" alias="CouponDO"/>
+	</typeAliases>
 	<plugins>
 		<plugin interceptor="com.github.pagehelper.PageInterceptor">
 			<property name="helperDialect" value="mysql"/>
