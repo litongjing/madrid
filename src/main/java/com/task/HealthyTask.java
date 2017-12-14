@@ -21,9 +21,6 @@ public class HealthyTask {
     CouponManager couponManager;
 
     public void start(){
-        CouponDTO couponDTO=new CouponDTO();
-        couponDTO.setCouponCode("5899937701012244");
-        log.info("some thing {}",couponManager.selectCoupon(couponDTO));
         log.info("###### current environment is {} ###########", envProperties.getEnv());
     }
 }
