@@ -62,6 +62,7 @@
 
     <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSourceD"/>
+        <!--打包jar typeAliasePackage扫描有问题-->
         <!--<property name="typeAliasesPackage" value="com.domain.DO"/>-->
         <property name="mapperLocations" value="classpath:config/mybatis/mapper/*mapper.xml"/>
         <property name="configLocation" value="classpath:config/mybatis/mybatis-config.xml"></property>
