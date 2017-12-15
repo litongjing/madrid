@@ -151,6 +151,12 @@
             <version>1.6.8.RELEASE</version>
             <scope>compile</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>23.4-jre</version>
+        </dependency>
     </dependencies>
 
     <profiles>

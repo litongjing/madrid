@@ -1,5 +1,6 @@
 package com.controller;
 
+import com.google.common.collect.Maps;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -17,6 +18,7 @@ import java.util.Map;
 public class demoController {
     @PostMapping("/queryname")
     public String queryProjectName(@RequestBody String param) {
+        log.info("queryname:{}", param);
         return param;
     }
 
@@ -31,5 +33,14 @@ public class demoController {
             }
         }
         return "success";
+    }
+
+    //applicaton/x-www-form-urlencoded
+    @PostMapping("/login")
+    public Map<String, Object> login(@RequestParam String name, @RequestParam String password) {
+        Map<String, Object> resultMap = Maps.newHashMap();
+        resultMap.put("name", name);
+        resultMap.put("password", password);
+        return resultMap;
     }
 }
