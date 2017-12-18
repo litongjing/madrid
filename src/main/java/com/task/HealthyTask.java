@@ -21,6 +21,7 @@ public class HealthyTask {
     CouponManager couponManager;
 
     public void start(){
+        log.debug("###### current environment is {} ###########", envProperties.getEnv());
         log.info("###### current environment is {} ###########", envProperties.getEnv());
     }
 }
