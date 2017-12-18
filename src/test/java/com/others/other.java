@@ -16,7 +16,7 @@ import java.util.Optional;
  */
 public class other {
     @Test
-    public void test_1(){
+    public void test_optional(){
         CouponDO couponDO=null;
         Optional<CouponDO> op=Optional.ofNullable(couponDO);//of不能为null //ofNullable允许null
         op.ifPresent(e->{
