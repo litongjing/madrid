@@ -3,6 +3,7 @@ package com.domain.DO;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -19,7 +20,7 @@ public class CouponDO  implements Serializable{
     private String couponCode;
     private String couponName;
     private String couponDesc;
-    private String amount;
+    private BigDecimal amount;
     private String leftAmount;
     private String counts;
     private String passWord;

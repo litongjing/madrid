@@ -44,10 +44,10 @@ public class other {
         System.out.println(op.isPresent());
 
         CouponDO couponDO1 = new CouponDO();
-        couponDO1.setAmount("1000");
+        couponDO1.setAmount(BigDecimal.TEN);
         Optional<CouponDO> op1 = Optional.ofNullable(couponDO1);
         System.out.println(op1.filter(e -> {
-            BigDecimal b = new BigDecimal(e.getAmount());
+            BigDecimal b = e.getAmount();
             return b.compareTo(BigDecimal.TEN) == 1;
         }).orElse(new CouponDO()));
 
@@ -136,13 +136,13 @@ public class other {
     }
 
     @Test
-    public void test_reflect() {
+    public void test_reflect() throws NoSuchFieldException, IllegalAccessException {
         CouponDO couponDO = new CouponDO();
 //        Class<?>clazz=couponDO.getClass();  //对象
 //        Class<?>clazz=CouponDO.class; //类
         Class<?> clazz = null;
         try {
-            clazz = Class.forName("com.domain.DO.CouponDO");//路劲
+            clazz = Class.forName("com.domain.DO.CouponDO");//路径
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -164,5 +164,18 @@ public class other {
             System.out.println(e.toString());
         });
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~");
+        CouponDO couponDO1 = null;
+        try {
+            couponDO1 = (CouponDO) clazz.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        Field amountField=clazz.getDeclaredField("amount");
+        System.out.println(amountField.getType());
+        amountField.setAccessible(true);
+        amountField.set(couponDO1,BigDecimal.TEN);
+        System.out.println(couponDO1.getAmount());
     }
 }
