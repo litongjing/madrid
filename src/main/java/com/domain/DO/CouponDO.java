@@ -38,4 +38,12 @@ public class CouponDO  implements Serializable{
     private String reserved2;
     private String reserved3;
     private String reserved4;
+
+    public CouponDO(){
+
+    }
+
+    public CouponDO(String couponCode){
+        this.couponCode=couponCode;
+    }
 }

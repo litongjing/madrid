@@ -20,6 +20,7 @@
         <import resource="classpath:/config/timer.xml"/>
         <import resource="classpath:/config/redis/redis.xml"/>
         <import resource="classpath:/config/redis/jedis.xml"/>
+        <import resource="classpath:/config/activemq/activemq.xml"/>
         <bean id="envProperties" class="com.util.EnvProperties">
             <property name="env" value="${env}"></property>
         </bean>

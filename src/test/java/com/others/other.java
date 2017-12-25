@@ -8,8 +8,12 @@ import org.junit.Test;
 import org.mockito.internal.exceptions.ExceptionIncludingMockitoWarnings;
 
 import javax.swing.text.html.Option;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.time.*;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -96,7 +100,7 @@ public class other {
     }
 
     @Test
-    public void test_date(){
+    public void test_date() {
         LocalDate date = LocalDate.of(2014, 3, 18);
         int year = date.getYear();
         System.out.println(year);
@@ -129,5 +133,36 @@ public class other {
         LocalDateTime dt3 = date.atTime(13, 45, 20);
         LocalDateTime dt4 = date.atTime(time2);
         LocalDateTime dt5 = time.atDate(date2);
+    }
+
+    @Test
+    public void test_reflect() {
+        CouponDO couponDO = new CouponDO();
+//        Class<?>clazz=couponDO.getClass();  //对象
+//        Class<?>clazz=CouponDO.class; //类
+        Class<?> clazz = null;
+        try {
+            clazz = Class.forName("com.domain.DO.CouponDO");//路劲
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~");
+        Method[] methods = clazz.getMethods();//method
+        Arrays.stream(methods).forEach(e -> {
+            System.out.println("方法: " + e.toString());
+        });
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~");
+        Field[] fields = clazz.getDeclaredFields();
+        System.out.println(fields.length);
+        Arrays.stream(fields).forEach(e -> {
+            System.out.println("属性: " + e.toString());
+        });
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~");
+        Constructor[] constructors = null;
+        constructors = clazz.getConstructors();
+        Arrays.stream(constructors).forEach(e -> {
+            System.out.println(e.toString());
+        });
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~");
     }
 }
