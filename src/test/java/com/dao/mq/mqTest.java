@@ -51,20 +51,24 @@ public class mqTest {
 
     @Test
     public void test_kafka() {
-//        KafkaProducerServer kafkaProducer = new KafkaProducerServer();
-        String topic = "xxTopic";
+        String topic = "orderTopic1";
         String value = "不容易啊";
         String ifPartition = "0";
         Integer partitionNum = 1;
         String role = "test";//用来生成key
-        Map<String, Object> res = kafkaProducerServer.sendMessageForTemplate
-                (topic, value, ifPartition, partitionNum, role);
-
+        for (int i = 0; i < 1; i++) {
+            Map<String, Object> res = kafkaProducerServer.sendMessageForTemplate
+                    (topic, value, ifPartition, partitionNum, role);
+            String message = (String) res.get("message");
+            String code = (String) res.get("code");
+            log.info("code:{}", code);
+            log.info("message:{}", message);
+        }
         log.info("测试结果如下：===============");
-        String message = (String) res.get("message");
-        String code = (String) res.get("code");
+    }
 
-        log.info("code:{}", code);
-        log.info("message:{}", message);
+    @Test
+    public void test_123() throws InterruptedException {
+        Thread.sleep(10000);
     }
 }
