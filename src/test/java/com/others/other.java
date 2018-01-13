@@ -1,9 +1,11 @@
 package com.others;
 
+import com.alibaba.druid.support.profile.Profiler;
 import com.domain.DO.CouponDO;
 import com.exception.MadridException;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.util.DateUtils;
 import org.junit.Test;
 import org.mockito.internal.exceptions.ExceptionIncludingMockitoWarnings;
 
@@ -12,11 +14,9 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.time.*;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
@@ -177,5 +177,41 @@ public class other {
         amountField.setAccessible(true);
         amountField.set(couponDO1,BigDecimal.TEN);
         System.out.println(couponDO1.getAmount());
+    }
+    @Test
+    public void test_parallelStream(){
+        List<Map<String,Object>>list=Lists.newArrayList();
+        for(int i=0;i<10;i++){
+            Map<String,Object>map=Maps.newHashMap();
+            map.put("a",i);
+            list.add(map);
+        }
+        long start=new Date().getTime();
+//        list.parallelStream().forEach(e->{
+//            try {
+//                System.out.println(e.get("a").toString());
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e1) {
+//                e1.printStackTrace();
+//            }
+//        });
+        list.stream().forEach(e->{
+            try {
+                System.out.println(e.get("a").toString());
+                Thread.sleep(1000);
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
+        });
+        System.out.println("~~~~~~~~");
+        System.out.println(new Date().getTime()-start);
+    }
+    @Test
+    public void test12(){
+//        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        java.util.Date date = new Date(1515125775*1000);
+//        String str = sdf.format(date);
+//        System.out.println(str);
+        System.out.println(new Date(1515032175000L));
     }
 }
