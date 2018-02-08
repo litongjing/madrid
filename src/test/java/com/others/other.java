@@ -1,6 +1,7 @@
 package com.others;
 
 import com.alibaba.druid.support.profile.Profiler;
+import com.domain.DO.AttributeDO;
 import com.domain.DO.CouponDO;
 import com.exception.MadridException;
 import com.google.common.collect.Lists;
@@ -8,6 +9,7 @@ import com.google.common.collect.Maps;
 import com.util.DateUtils;
 import org.junit.Test;
 import org.mockito.internal.exceptions.ExceptionIncludingMockitoWarnings;
+import org.springframework.util.StopWatch;
 
 import javax.swing.text.html.Option;
 import java.lang.reflect.Constructor;
@@ -18,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.time.*;
 import java.util.*;
 
+import static com.alibaba.fastjson.JSON.toJSON;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toMap;
 
@@ -204,6 +207,9 @@ public class other {
             }
         });
         System.out.println("~~~~~~~~");
+        System.out.println("1");
+        list.stream().forEach(System.out::println);
+        System.out.println(2);
         System.out.println(new Date().getTime()-start);
     }
     @Test
@@ -213,5 +219,8 @@ public class other {
 //        String str = sdf.format(date);
 //        System.out.println(str);
         System.out.println(new Date(1515032175000L));
+        AttributeDO attributeDO=new AttributeDO();
+        attributeDO.setDate(new Date());
+        System.out.println(toJSON(attributeDO));
     }
 }

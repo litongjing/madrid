@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mapper.CampnouCouponMapper">
+
+<insert id="insertCampnouCoupon" parameterType="CampnouCouponDO">
+    insert ignore into coupon
+    (gmt_create,gmt_modified,couponcode,couponname,amount,leftamount,attributes)
+    VALUES
+    (now(),now(),#{couponCode},#{couponName},#{amount},#{leftAmount},#{attributes,typeHandler=com.util.JSONTypeHandler})
+</insert>
+
+<resultMap type="com.domain.DO.CampnouCouponDO" id="CampnouCouponDO">
+    <result column="attributes" property="attributes" typeHandler="com.util.JSONTypeHandler"/>
+</resultMap>
+
+<select id="selectCampnouCoupon" resultMap="CampnouCouponDO">
+    select
+    gmt_create,gmt_modified,couponcode,couponname,amount,leftamount,attributes
+    FROM
+    coupon
+    where id=#{id}
+</select>
+</mapper>

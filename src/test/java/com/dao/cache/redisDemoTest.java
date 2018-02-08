@@ -47,8 +47,9 @@ public class redisDemoTest {
         CouponDTO couponDTO = new CouponDTO();
         couponDTO.setCouponCode("5899937701012244");
         CouponDO couponDO = couponManager.selectCoupon(couponDTO);
-        redisTemplate.opsForValue().set("coupon6", couponDO);
-        System.out.println(redisTemplate.opsForValue().get("coupon6"));
+        System.out.println(couponDO);
+//        redisTemplate.opsForValue().set("coupon6", couponDO);
+//        System.out.println(redisTemplate.opsForValue().get("coupon6"));
 //        redisTemplate.expire("key", 10, TimeUnit.SECONDS);
     }
 

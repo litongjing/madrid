@@ -15,7 +15,7 @@ import java.util.Map;
  */
 @RestController
 @Slf4j
-public class demoController {
+public class DemoController {
     @PostMapping("/queryname")
     public String queryProjectName(@RequestBody String param) {
         log.info("queryname:{}", param);
@@ -24,7 +24,8 @@ public class demoController {
 
     @RequestMapping("/sleep")
     public String sleep() {
-        for (int i = 0; i < 100; i++) {
+        int count=100;
+        for (int i = 0; i < count; i++) {
             try {
                 Thread.sleep(1000);
                 log.info("~~~sleepting {}", i);
@@ -34,8 +35,13 @@ public class demoController {
         }
         return "success";
     }
-
-    //applicaton/x-www-form-urlencoded
+    /**
+     *
+     * @param name
+     * @param password
+     * @return
+     * //applicaton/x-www-form-urlencoded
+     */
     @PostMapping("/login")
     public Map<String, Object> login(@RequestParam String name, @RequestParam String password) {
         Map<String, Object> resultMap = Maps.newHashMap();

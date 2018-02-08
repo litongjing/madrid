@@ -1,31 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration
-		PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-		"http://mybatis.org/dtd/mybatis-3-config.dtd">
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
-	<settings>
-		<setting name="mapUnderscoreToCamelCase" value="true"/>
-		<setting name="cacheEnabled" value="false"/>
-		<setting name="useGeneratedKeys" value="true"/>
-		<!--<setting name="defaultExecutorType" value="REUSE" />-->
-		<!-- 打印查询语句 -->
-		<!--关于logimpl的设定值还不支持logback-->
-		<!--设定改为STDOUT_LOGGING是可以显示sql的-->
-		<setting name="logImpl" value="STDOUT_LOGGING" />
-		<setting name="callSettersOnNulls" value="true"/>
-	</settings>
-	<typeAliases>
-		<typeAlias type="com.domain.DO.CouponDO" alias="CouponDO"/>
-	</typeAliases>
-	<plugins>
-		<plugin interceptor="com.github.pagehelper.PageInterceptor">
-			<property name="helperDialect" value="mysql"/>
-			<property name="reasonable" value="true"/>
-			<property name="supportMethodsArguments" value="true"/>
-			<property name="autoRuntimeDialect" value="true"/>
-		</plugin>
-		<!--sql执行时间-->
-		<plugin interceptor="com.interceptor.SQLTimeInterceptor"/>
-	</plugins>
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <setting name="cacheEnabled" value="false"/>
+        <setting name="useGeneratedKeys" value="true"/>
+        <!--<setting name="defaultExecutorType" value="REUSE" />-->
+        <!-- 打印查询语句 -->
+        <!--关于logimpl的设定值还不支持logback-->
+        <!--设定改为STDOUT_LOGGING是可以显示sql的-->
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+        <setting name="callSettersOnNulls" value="true"/>
+    </settings>
+    <typeAliases>
+        <typeAlias type="com.domain.DO.CouponDO" alias="CouponDO"/>
+        <typeAlias type="com.domain.DO.CampnouCouponDO" alias="CampnouCouponDO"/>
+    </typeAliases>
+
+    <!--<typeHandlers>-->
+        <!--<typeHandler handler="com.util.JSONTypeHandler"/>-->
+    <!--</typeHandlers>-->
+
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor">
+            <property name="helperDialect" value="mysql"/>
+            <property name="reasonable" value="true"/>
+            <property name="supportMethodsArguments" value="true"/>
+            <property name="autoRuntimeDialect" value="true"/>
+        </plugin>
+        <!--sql执行时间-->
+        <plugin interceptor="com.interceptor.SQLTimeInterceptor"/>
+    </plugins>
 </configuration>

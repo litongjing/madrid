@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 //多数据源时（多个DataSource.class）排除DataSourceAutoConfiguration.class
 //或datasource bean 设置primary @Primary注解的实例优先于其他实例被注入
-//@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
+@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
 //
 //@EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class, DevToolsDataSourceAutoConfiguration.class})
 public class MadridApplication {
