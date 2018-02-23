@@ -2,11 +2,14 @@ package com.others;
 
 import com.alibaba.druid.support.profile.Profiler;
 import com.domain.DO.AttributeDO;
+import com.domain.DO.CampnouCouponDO;
 import com.domain.DO.CouponDO;
+import com.domain.DTO.CardDTO;
 import com.exception.MadridException;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.util.DateUtils;
+import org.apache.commons.beanutils.BeanUtils;
 import org.junit.Test;
 import org.mockito.internal.exceptions.ExceptionIncludingMockitoWarnings;
 import org.springframework.util.StopWatch;
@@ -14,6 +17,7 @@ import org.springframework.util.StopWatch;
 import javax.swing.text.html.Option;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -175,21 +179,22 @@ public class other {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-        Field amountField=clazz.getDeclaredField("amount");
+        Field amountField = clazz.getDeclaredField("amount");
         System.out.println(amountField.getType());
         amountField.setAccessible(true);
-        amountField.set(couponDO1,BigDecimal.TEN);
+        amountField.set(couponDO1, BigDecimal.TEN);
         System.out.println(couponDO1.getAmount());
     }
+
     @Test
-    public void test_parallelStream(){
-        List<Map<String,Object>>list=Lists.newArrayList();
-        for(int i=0;i<10;i++){
-            Map<String,Object>map=Maps.newHashMap();
-            map.put("a",i);
+    public void test_parallelStream() {
+        List<Map<String, Object>> list = Lists.newArrayList();
+        for (int i = 0; i < 10; i++) {
+            Map<String, Object> map = Maps.newHashMap();
+            map.put("a", i);
             list.add(map);
         }
-        long start=new Date().getTime();
+        long start = new Date().getTime();
 //        list.parallelStream().forEach(e->{
 //            try {
 //                System.out.println(e.get("a").toString());
@@ -198,7 +203,7 @@ public class other {
 //                e1.printStackTrace();
 //            }
 //        });
-        list.stream().forEach(e->{
+        list.stream().forEach(e -> {
             try {
                 System.out.println(e.get("a").toString());
                 Thread.sleep(1000);
@@ -210,17 +215,60 @@ public class other {
         System.out.println("1");
         list.stream().forEach(System.out::println);
         System.out.println(2);
-        System.out.println(new Date().getTime()-start);
+        System.out.println(new Date().getTime() - start);
     }
+
     @Test
-    public void test12(){
+    public void test12() {
 //        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 //        java.util.Date date = new Date(1515125775*1000);
 //        String str = sdf.format(date);
 //        System.out.println(str);
         System.out.println(new Date(1515032175000L));
-        AttributeDO attributeDO=new AttributeDO();
+        AttributeDO attributeDO = new AttributeDO();
         attributeDO.setDate(new Date());
         System.out.println(toJSON(attributeDO));
+    }
+
+    @Test
+    public void test13() {
+        int i = 1;
+        int a = 0;
+        a = i++;
+        System.out.println(a);
+        int i1 = 1;
+        System.out.println(++i1);
+
+        int b1 = 0;
+        int b2 = 0;
+    }
+
+    @Test
+    public void test14() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        CouponDO couponDO = new CouponDO();
+        CampnouCouponDO campnouCouponDO = new CampnouCouponDO();
+        campnouCouponDO.setId("11");
+        couponDO.setAmount(BigDecimal.TEN);
+        CardDTO cardDTO = new CardDTO();
+        cardDTO.setPrice(BigDecimal.ZERO);
+        /**/
+        CouponDO couponDO1 = (CouponDO) BeanUtils.cloneBean(couponDO);
+        System.out.println(couponDO.hashCode() + "  " + couponDO1.hashCode());
+        couponDO1.setAccount("111");
+        System.out.println(couponDO.equals(couponDO1));
+        System.out.println(couponDO);
+        System.out.println(couponDO1);
+
+        CouponDO couponDO2 = new CouponDO();
+        /**/
+        BeanUtils.copyProperties(cardDTO, campnouCouponDO);
+        System.out.println(cardDTO);
+        /**/
+        System.out.println(BeanUtils.describe(couponDO).get("amount").toString());
+        /**/
+        System.out.println(BeanUtils.getSimpleProperty(couponDO, "amount"));
+        /**/
+        BeanUtils.setProperty(couponDO, "couponName", "haha");
+        System.out.println(couponDO);
     }
 }
