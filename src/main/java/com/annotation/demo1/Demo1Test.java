@@ -2,6 +2,10 @@ package com.annotation.demo1;
 
 import com.annotation.DataImpl;
 import com.annotation.DataInterface;
+import scala.annotation.meta.field;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 /**
  * @Author:LiTongjing
@@ -16,28 +20,52 @@ public class Demo1Test {
         f1.setName("ltj");
         f2.setId(2);
         f2.setName("xavi");
+        System.out.println(query(f1));
     }
 
-    private static String query(Object f) {
-        StringBuilder sql = new StringBuilder();
-        Class c = f.getClass();
-        boolean exist = c.isAnnotationPresent(Table.class);
-        if (!exist) {
-            return null;
+    private static String query(Object obj) {
+        Table table = obj.getClass().getAnnotation(Table.class);
+        StringBuffer sbSql = new StringBuffer();
+        String tableName = table.value();
+        sbSql.append("select * from " + tableName + " where 1=1 ");
+        Field[] fileds = obj.getClass().getDeclaredFields();
+        for (Field f : fileds) {
+            String fieldName = f.getName();
+            String methodName = "get" + fieldName.substring(0, 1).toUpperCase()
+                    + fieldName.substring(1);
+            try {
+                Column column = f.getAnnotation(Column.class);
+                if (column != null) {
+                    Method method = obj.getClass().getMethod(methodName);
+                    String value = (String) method.invoke(obj);
+                    if (value != null && !value.equals("")) {
+                        if (!isNum(column.value()) && !isNum(value)) {
+                            // 判断参数是不是 in 类型参数 1,2,3
+                            if (value.contains(",")) {
+                                sbSql.append(" and " + column.value() + " in (" + value + ") ");
+                            } else {
+                                sbSql.append(" and " + column.value() + " like '%" + value + "%' ");
+                            }
+                        } else {
+                            sbSql.append(" and " + column.value() + "=" + value + " ");
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-        Table t = (Table) c.getAnnotation(Table.class);
-        String tableName = t.value();
-        sql.append("select * from ").append(tableName).append(" where 1=1 ");
-        return null;
+        return sbSql.toString();
     }
 
-//    public static void main(String[] args) {
-//        DataImpl data=new DataImpl();
-//        Class<?> clazz = DataImpl.class;
-//        System.out.println(1);
-//        System.out.println(DataInterface.class.isAssignableFrom(clazz));
-//        System.out.println(2);
-//        System.out.println(data instanceof DataImpl);
-//
-//    }
+    public static boolean isNum(String target) {
+        boolean isNum = false;
+        if (target.toLowerCase().contains("id")) {
+            isNum = true;
+        }
+        if (target.matches("\\d+")) {
+            isNum = true;
+        }
+        return isNum;
+    }
 }

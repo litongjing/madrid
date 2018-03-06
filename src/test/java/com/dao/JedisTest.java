@@ -31,8 +31,11 @@ public class JedisTest {
 
     @Before
     public void setup() {
-        jedis = new Jedis("192.168.130.7", 6379);
-        jedis.auth("intimednb");
+//        jedis = new Jedis("192.168.130.7", 6379);
+//        jedis.auth("intimednb");
+
+        jedis=new Jedis("47.97.175.43",6379);
+        jedis.auth("little");
     }
 
     @Test
@@ -42,5 +45,7 @@ public class JedisTest {
         CouponDO couponDO = couponManager.selectCoupon(couponDTO);
         jedis.set("coupon".getBytes(), SerializeUtil.serialize(couponDO));
         System.out.println((CouponDO) SerializeUtil.unserialize(jedis.get("coupon".getBytes())));
+
+//        jedis.flushAll();
     }
 }
