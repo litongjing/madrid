@@ -2,6 +2,7 @@ package com.util;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Lists;
 import org.junit.Test;
 import org.springframework.util.StopWatch;
 
@@ -15,7 +16,10 @@ import java.net.URL;
 import java.security.PrivateKey;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Author:LiTongjing
@@ -95,9 +99,25 @@ public class Util {
         JSONObject jsonObject=null;
         System.out.println(jsonObject==null?null:jsonObject.toString());
         SimpleDateFormat sf=new SimpleDateFormat("yyyy-mm-dd");
-        Date date=sf.parse("2018-01-01");
+        Date date=sf.parse("2018-03-01");
         System.out.println(date.getTime());
         System.out.println(JSON.parseObject(null));
         //sdfk
+    }
+    @Test
+    public void test_other1(){
+        List<String> list= Lists.newArrayList();
+        for(int i=0;i<10001;i++){
+            list.add(i+"");
+        }
+        StopWatch stopWatch=new StopWatch();
+        stopWatch.start();
+        List<String>list1=list.stream().map(e->{
+            System.out.println(e);
+            return e;
+        }).collect(Collectors.toList());
+        System.out.println(list1.size());
+        stopWatch.stop();
+        System.out.println(stopWatch.prettyPrint());
     }
 }
