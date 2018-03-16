@@ -102,20 +102,42 @@
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
-
+    <!--ibatis-->
     <bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
         <!-- 此处应注入ibatis配置文件，而非sqlMap文件，否则会出现“there is no statement.....异常” -->
         <property name="configLocation">
             <value>classpath:config/ibatis/sqlMapConfig.xml</value>
         </property>
+        <property name="dataSource" ref="dataSource2"/>
     </bean>
 
-    <bean id="DaoImp" class="com.ibatis.DaoImp">
+    <!--<bean id="DaoImp" class="com.ibatis.DaoImp">-->
+    <!--<property name="dataSource">-->
+    <!--<ref bean="dataSource2"/>-->
+    <!--</property>-->
+    <!--<property name="sqlMapClient">-->
+    <!--<ref bean="sqlMapClient"/>-->
+    <!--</property>-->
+    <!--</bean>-->
+    <bean id="sqlMapClientTemplate" class="org.springframework.orm.ibatis.SqlMapClientTemplate">
+        <constructor-arg>
+            <ref bean="sqlMapClient"/>
+        </constructor-arg>
+    </bean>
+
+    <bean id="daoImp" class="com.ibatis.DaoImp">
+        <property name="sqlMapClientTemplate" ref="sqlMapClientTemplate"/>
+    </bean>
+
+
+    <bean id="transactionManagerforibatis"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource">
             <ref bean="dataSource2"/>
         </property>
-        <property name="sqlMapClient">
-            <ref bean="sqlMapClient"/>
-        </property>
+    </bean>
+
+    <bean id="transactionTempleteforibatis" class="org.springframework.transaction.support.TransactionTemplate">
+        <property name="transactionManager" ref="transactionManagerforibatis"></property>
     </bean>
 </beans>

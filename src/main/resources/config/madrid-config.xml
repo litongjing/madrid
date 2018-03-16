@@ -24,6 +24,7 @@
         <import resource="classpath:/config/kafka/kafka-producer.xml"/>
         <import resource="classpath:/config/kafka/kafka-consumer.xml"/>
         <import resource="classpath:/config/dozer/spring-dozer.xml"/>
+        <import resource="classpath:/config/redis/beans-redis.xml"/>
         <bean id="envProperties" class="com.util.EnvProperties">
             <property name="env" value="${env}"></property>
         </bean>

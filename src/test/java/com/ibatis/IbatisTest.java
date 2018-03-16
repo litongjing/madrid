@@ -7,7 +7,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -25,6 +27,8 @@ import java.util.List;
 public class IbatisTest {
     @Autowired
     Dao dao;
+    @Autowired
+    IbatisService ibatisService;
 
     @Test
     public void test_1() {
@@ -36,9 +40,16 @@ public class IbatisTest {
         System.out.println("获得全查询列表");
         List<Ibatis> result = new ArrayList<Ibatis>();
         result = dao.getList();
+        ThreadLocal<String> holder = new ThreadLocal<String>();
+        System.out.println(holder.get());
         for (Iterator<Ibatis> iter = result.iterator(); iter.hasNext(); ) {
             Ibatis element = (Ibatis) iter.next();
             System.out.println(element.getName());
         }
+    }
+    @Test
+    public void test_2() throws SQLException {
+//        ibatisService.insert(new Ibatis("22", "new3"));
+        ibatisService.insert1(new Ibatis("25","new4"));
     }
 }

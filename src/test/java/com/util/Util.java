@@ -3,6 +3,7 @@ package com.util;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.util.StopWatch;
 
@@ -19,6 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -29,11 +31,11 @@ import java.util.stream.Collectors;
 public class Util {
 
     @Test
-    public void test_1(){
+    public void test_1() {
         String access_token_url = "https://oapi.dingtalk.com/gettoken?corpid=CorpID&corpsecret=SECRET";
         String requestUrl = access_token_url
                 .replace("CorpID", "ding10dfcbc0c7dabea235c2f4657eb6378f").replace("SECRET", "gpcpE2w46l9dmofWcUYcWtQsUKjCmgptjW05Q5IDIJMmFWq-12ef3NmAcjA0Nnh_");
-        StopWatch stopWatch=new StopWatch();
+        StopWatch stopWatch = new StopWatch();
         stopWatch.start("getToken");
         JSONObject jsonObject = request(requestUrl, "GET", null);
         stopWatch.stop();
@@ -42,9 +44,9 @@ public class Util {
     }
 
     @Test
-    public void test_2(){
+    public void test_2() {
         //9f8c477337053066a481feb4f3cbae9f
-        String access_token_url="https://oapi.dingtalk.com/user/get?access_token=ACCESS_TOKEN&userid=zhangsan";
+        String access_token_url = "https://oapi.dingtalk.com/user/get?access_token=ACCESS_TOKEN&userid=zhangsan";
         String requestUrl = access_token_url
                 .replace("ACCESS_TOKEN", "9f8c477337053066a481feb4f3cbae9f").replace("zhangsan", "10143988");
         System.out.println(requestUrl);
@@ -53,7 +55,7 @@ public class Util {
     }
 
     private JSONObject request(String request, String RequestMethod, String output) {
-        System.out.println("请求参数："+output);
+        System.out.println("请求参数：" + output);
         JSONObject jsonObject = null;
         StringBuffer buffer = new StringBuffer();
         try {
@@ -73,7 +75,7 @@ public class Util {
             }
             // 流处理
             InputStream input = connection.getInputStream();
-            InputStreamReader inputReader = new InputStreamReader(input,"UTF-8");
+            InputStreamReader inputReader = new InputStreamReader(input, "UTF-8");
             BufferedReader reader = new BufferedReader(inputReader);
             String line;
             while ((line = reader.readLine()) != null) {
@@ -91,33 +93,82 @@ public class Util {
         }
         return jsonObject;
     }
+
     @Test
     public void test_other() throws ParseException {
-        Double db=10.00;
+        Double db = 10.00;
         System.out.println(new BigDecimal(db));
         System.out.println(new Date().getTime());
-        JSONObject jsonObject=null;
-        System.out.println(jsonObject==null?null:jsonObject.toString());
-        SimpleDateFormat sf=new SimpleDateFormat("yyyy-mm-dd");
-        Date date=sf.parse("2018-03-01");
+        JSONObject jsonObject = null;
+        System.out.println(jsonObject == null ? null : jsonObject.toString());
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-mm-dd");
+        Date date = sf.parse("2018-03-01");
         System.out.println(date.getTime());
         System.out.println(JSON.parseObject(null));
         //sdfk
     }
+
     @Test
-    public void test_other1(){
-        List<String> list= Lists.newArrayList();
-        for(int i=0;i<10001;i++){
-            list.add(i+"");
+    public void test_other1() {
+        List<String> list = Lists.newArrayList();
+        for (int i = 0; i < 10001; i++) {
+            list.add(i + "");
         }
-        StopWatch stopWatch=new StopWatch();
+        StopWatch stopWatch = new StopWatch();
         stopWatch.start();
-        List<String>list1=list.stream().map(e->{
+        List<String> list1 = list.stream().map(e -> {
             System.out.println(e);
             return e;
         }).collect(Collectors.toList());
         System.out.println(list1.size());
         stopWatch.stop();
         System.out.println(stopWatch.prettyPrint());
+    }
+
+    @Test
+    public void test_other2() throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        System.out.println(sdf.format(new Date()));
+        System.out.println(sdf.parse("2018-03-12 10:12:13").getTime());
+        System.out.println(sdf.parse("2018-03-12 10:12:15").getTime());
+        Long as = 123L;
+        Optional.ofNullable(as).ifPresent(
+                e -> {
+                    System.out.println(e);
+                }
+        );
+    }
+
+    @Test
+    public void test_other3() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("a", "b");
+        System.out.println(JSON.toJSONString(jsonObject, true));
+    }
+
+    @Test
+    public void test_other4() {
+        new Thread(new Runnable() {
+            ThreadLocal<String> tl = new ThreadLocal<String>();
+
+            @Override
+            public void run() {
+                tl.set("oh my god!");
+                String s = tl.get();
+                System.out.println(s);
+            }
+        }).start();
+    }
+
+    @Test
+    public void test_other5() {
+        final ThreadLocal<String> local = new InheritableThreadLocal<>();
+        local.set("I love China");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println(local.get());
+            }
+        }).start();
     }
 }

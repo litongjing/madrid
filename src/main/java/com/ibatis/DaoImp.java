@@ -1,5 +1,6 @@
 package com.ibatis;
 
+import org.springframework.orm.ibatis.SqlMapClientTemplate;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
 import java.util.List;
@@ -9,37 +10,47 @@ import java.util.List;
  * @Description:
  * @Date:Create by 下午5:35 2018/3/6
  */
-public class DaoImp extends SqlMapClientDaoSupport implements Dao {
+public class DaoImp implements Dao {
+    private SqlMapClientTemplate sqlMapClientTemplate;
+
+    public SqlMapClientTemplate getSqlMapClientTemplate() {
+        return sqlMapClientTemplate;
+    }
+
+    public void setSqlMapClientTemplate(SqlMapClientTemplate sqlMapClientTemplate) {
+        this.sqlMapClientTemplate = sqlMapClientTemplate;
+    }
+
     @Override
     public void delete(String id) {
-        getSqlMapClientTemplate().delete("deleteUsers", id);
+        this.sqlMapClientTemplate.delete("deleteUsers", id);
     }
 
     @Override
     public Ibatis getById(String id) {
-        return (Ibatis) getSqlMapClientTemplate().queryForObject("getUsersById", id);
+        return (Ibatis) this.sqlMapClientTemplate.queryForObject("getUsersById", id);
     }
 
     @Override
     public Ibatis getByName(String name) {
 
-        return (Ibatis) getSqlMapClientTemplate().queryForObject("getUsersByName", name);
+        return (Ibatis) this.sqlMapClientTemplate.queryForObject("getUsersByName", name);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public List<Ibatis> getList() {
-        return getSqlMapClientTemplate().queryForList("getAllUsers", null);
+        return this.sqlMapClientTemplate.queryForList("getAllUsers", null);
     }
 
     @Override
     public void insert(Ibatis ibatis) {
-        getSqlMapClientTemplate().insert("insertUsers", ibatis);
+        this.sqlMapClientTemplate.insert("insertUsers", ibatis);
     }
 
     @Override
     public void update(Ibatis ibatis) {
-        getSqlMapClientTemplate().update("updateUsers", ibatis);
+        this.sqlMapClientTemplate.update("updateUsers", ibatis);
     }
 
 }

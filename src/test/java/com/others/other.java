@@ -102,7 +102,18 @@ public class other {
         System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         //能够从流中随便选一个元素出来，找到第一个
         list.stream().findAny().get();
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        String[] str = new String[]{"hello", "world"};
+        System.out.println(Arrays.stream(str).map(e -> e.split("")).flatMap(Arrays::stream).collect(toList()));
+        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        List<Integer> someNumbers = Arrays.asList(1, 2, 3, 4, 5);
 
+        System.out.println(someNumbers.stream()
+                .map(x -> x * x)
+                .filter(x -> x % 3 == 0).collect(toList()));
+        Integer[] integers=new Integer[]{1,2,3,4,5};
+
+        System.out.println(Arrays.stream(integers).reduce(Integer::max).get());
 
     }
 
