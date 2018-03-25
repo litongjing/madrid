@@ -26,6 +26,7 @@ public class Producer {
         log.info("~~~~~~~~~~~~~~~~~~~~~~~");
         log.info("开始发送消息：{}",message);
         jmsTemplate.send(destination, new MessageCreator() {
+            @Override
             public Message createMessage(Session session) throws JMSException {
                 return session.createTextMessage(message);
             }

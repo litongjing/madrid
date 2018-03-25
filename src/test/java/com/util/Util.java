@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.util.Strings;
 import org.junit.Test;
 import org.springframework.util.StopWatch;
 
@@ -17,10 +18,7 @@ import java.net.URL;
 import java.security.PrivateKey;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -170,5 +168,55 @@ public class Util {
                 System.out.println(local.get());
             }
         }).start();
+    }
+    @Test
+    public void test_test(){
+        JSONObject jsonObject=new JSONObject();
+        jsonObject.put("desc","desc");
+        byte[] b=jsonObject.toString().getBytes();
+        System.out.println(new String(b));
+        List<Integer>list=Lists.newArrayList();
+//        for(int i=0;i<10;i++){
+//            list.add(i);
+//        }
+        Optional<Integer> any = list.stream().filter(e-> !Strings.isNullOrEmpty(e.toString())).findFirst();
+        System.out.println(any.isPresent());
+        any.ifPresent(e->{
+            System.out.println(1234);
+        });
+        //any.ifPresent();
+        JSONObject jsonObject1=new JSONObject();
+        System.out.println(jsonObject==null);
+    }
+    @Test
+    public void test_12(){
+        long UA = 'u';
+        Random RANDOM = new Random();
+        short seqid = (short) RANDOM.nextInt();
+        long time = System.currentTimeMillis() / 1000;
+        Long a=(UA << 56) | ((time << 16) & 0xFFFFFFFF) | seqid & 0xFFFF;
+        long a1=UA<<56;
+        System.out.println(a);
+        long a2=((time << 16) & 0xFFFFFFFF);
+        System.out.println(a2);
+        long a3=a1 | a2;
+        System.out.println(a3);
+        System.out.println(a1+a2);
+        System.out.println(UUID.randomUUID());
+
+        System.out.println( System.currentTimeMillis());
+        System.out.println( System.currentTimeMillis());
+        System.out.println( System.currentTimeMillis() );
+        System.out.println( System.currentTimeMillis() );
+        System.out.println( System.currentTimeMillis() );
+    }
+
+    @Test
+    public void test_13(){
+        int count=4;
+        while(count>0){
+            System.out.println(count);
+            count--;
+        }
     }
 }

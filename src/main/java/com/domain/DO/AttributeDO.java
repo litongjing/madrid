@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.management.Attribute;
 import java.util.Date;
 
 /**
@@ -30,5 +31,8 @@ public class AttributeDO {
         attributeDO.setA2("2");
         System.out.println(attributeDO);
         System.out.println(attributeDO1);
+        AttributeDO attributeDO2=AttributeDO.builder().a1("1").a2("2").build();
+        System.out.println("@@@@@");
+        System.out.println(attributeDO2);
     }
 }

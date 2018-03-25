@@ -47,9 +47,10 @@ public class IbatisTest {
             System.out.println(element.getName());
         }
     }
+
     @Test
     public void test_2() throws SQLException {
 //        ibatisService.insert(new Ibatis("22", "new3"));
-        ibatisService.insert1(new Ibatis("25","new4"));
+//        ibatisService.insert1(new Ibatis("25","new4"));
     }
 }

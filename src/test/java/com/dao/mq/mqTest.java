@@ -51,7 +51,7 @@ public class mqTest {
 
     @Test
     public void test_kafka() {
-        String topic = "orderTopic1";
+        String topic = "test";
         String value = "不容易啊";
         String ifPartition = "0";
         Integer partitionNum = 1;
