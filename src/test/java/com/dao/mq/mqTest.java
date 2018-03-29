@@ -1,5 +1,11 @@
 package com.dao.mq;
 
+import com.alibaba.rocketmq.client.exception.MQBrokerException;
+import com.alibaba.rocketmq.client.exception.MQClientException;
+import com.alibaba.rocketmq.client.producer.DefaultMQProducer;
+import com.alibaba.rocketmq.client.producer.SendResult;
+import com.alibaba.rocketmq.common.message.Message;
+import com.alibaba.rocketmq.remoting.exception.RemotingException;
 import com.example.demo.MadridApplication;
 import com.mq.activemq.Producer;
 import com.mq.kafka.KafkaProducerServer;
@@ -7,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,6 +43,9 @@ public class mqTest {
     @Autowired
     KafkaProducerServer kafkaProducerServer;
 
+    @Autowired
+    DefaultMQProducer  defaultMQProducer;
+
     @Test
     public void test_produce() throws InterruptedException {
         for (int i = 0; i < 1000; i++) {
@@ -52,7 +62,7 @@ public class mqTest {
     @Test
     public void test_kafka() {
         String topic = "test";
-        String value = "不容易啊";
+        String value = "ltj test";
         String ifPartition = "0";
         Integer partitionNum = 1;
         String role = "test";//用来生成key
@@ -70,5 +80,25 @@ public class mqTest {
     @Test
     public void test_123() throws InterruptedException {
         Thread.sleep(10000);
+    }
+
+    @Test
+    public void rocketMq_test(){
+        try {
+            Message msg = new Message("PushTopic", "push", "rocketmq for test.123412414".getBytes());
+            SendResult result = defaultMQProducer.send(msg);
+            System.out.println("id:" + result.getMsgId() + " result:" + result.getSendStatus());
+        } catch (BeansException e) {
+            e.printStackTrace();
+        } catch (MQClientException e) {
+            e.printStackTrace();
+        } catch (RemotingException e) {
+            e.printStackTrace();
+        } catch (MQBrokerException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 }

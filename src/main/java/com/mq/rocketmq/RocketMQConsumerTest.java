@@ -12,7 +12,7 @@ public class RocketMQConsumerTest {
     public static void main(String[] args) {
 
 
-        String mqNameServer = "47.97.175.43:9876";
+        String mqNameServer = "localhost:9876";
         String mqTopics = "MQ-MSG-TOPICS-TEST";
 
         String consumerMqGroupName = "CONSUMER-MQ-GROUP";

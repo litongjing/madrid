@@ -2,6 +2,7 @@ package com.util;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.domain.DO.CouponDO;
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.util.Strings;
@@ -218,5 +219,9 @@ public class Util {
             System.out.println(count);
             count--;
         }
+    }
+    @Test
+    public void test_14(){
+        CouponDO couponDO=new CouponDO();
     }
 }
