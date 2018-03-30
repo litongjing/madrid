@@ -198,6 +198,8 @@ public class Util {
         Long a=(UA << 56) | ((time << 16) & 0xFFFFFFFF) | seqid & 0xFFFF;
         long a1=UA<<56;
         System.out.println(a);
+
+
         long a2=((time << 16) & 0xFFFFFFFF);
         System.out.println(a2);
         long a3=a1 | a2;
