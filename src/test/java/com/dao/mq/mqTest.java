@@ -44,7 +44,7 @@ public class mqTest {
     KafkaProducerServer kafkaProducerServer;
 
     @Autowired
-    DefaultMQProducer  defaultMQProducer;
+    DefaultMQProducer defaultMQProducer;
 
     @Test
     public void test_produce() throws InterruptedException {
@@ -60,8 +60,8 @@ public class mqTest {
     }
 
     @Test
-    public void test_kafka() {
-        String topic = "test";
+    public void test_kafka() throws InterruptedException {
+        String topic = "test1";
         String value = "ltj test";
         String ifPartition = "0";
         Integer partitionNum = 1;
@@ -75,6 +75,8 @@ public class mqTest {
             log.info("message:{}", message);
         }
         log.info("测试结果如下：===============");
+
+        Thread.sleep(10000);
     }
 
     @Test
@@ -83,7 +85,7 @@ public class mqTest {
     }
 
     @Test
-    public void rocketMq_test(){
+    public void rocketMq_test() {
         try {
             Message msg = new Message("PushTopic", "push", "rocketmq for test.123412414".getBytes());
             SendResult result = defaultMQProducer.send(msg);

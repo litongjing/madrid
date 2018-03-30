@@ -17,6 +17,8 @@ public class KafkaConsumerServer implements MessageListener<String, String> {
         String topic = record.topic();
         String key = record.key();
         String value = record.value();
+        log.info("~~~~~~~~~~~~~");
+        log.info(record.value());
         long offset = record.offset();
         int partition = record.partition();
         log.info("topic:{}", topic);
