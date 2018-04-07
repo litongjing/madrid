@@ -22,6 +22,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
+
 /**
  * @Author:LiTongjing
  * @Description:
@@ -118,7 +120,7 @@ public class Util {
         List<String> list1 = list.stream().map(e -> {
             System.out.println(e);
             return e;
-        }).collect(Collectors.toList());
+        }).collect(toList());
         System.out.println(list1.size());
         stopWatch.stop();
         System.out.println(stopWatch.prettyPrint());
@@ -170,63 +172,114 @@ public class Util {
             }
         }).start();
     }
+
     @Test
-    public void test_test(){
-        JSONObject jsonObject=new JSONObject();
-        jsonObject.put("desc","desc");
-        byte[] b=jsonObject.toString().getBytes();
+    public void test_test() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("desc", "desc");
+        byte[] b = jsonObject.toString().getBytes();
         System.out.println(new String(b));
-        List<Integer>list=Lists.newArrayList();
+        List<Integer> list = Lists.newArrayList();
 //        for(int i=0;i<10;i++){
 //            list.add(i);
 //        }
-        Optional<Integer> any = list.stream().filter(e-> !Strings.isNullOrEmpty(e.toString())).findFirst();
+        Optional<Integer> any = list.stream().filter(e -> !Strings.isNullOrEmpty(e.toString())).findFirst();
         System.out.println(any.isPresent());
-        any.ifPresent(e->{
+        any.ifPresent(e -> {
             System.out.println(1234);
         });
         //any.ifPresent();
-        JSONObject jsonObject1=new JSONObject();
-        System.out.println(jsonObject==null);
+        JSONObject jsonObject1 = new JSONObject();
+        System.out.println(jsonObject == null);
     }
+
     @Test
-    public void test_12(){
+    public void test_12() {
         long UA = 'u';
         Random RANDOM = new Random();
         short seqid = (short) RANDOM.nextInt();
         long time = System.currentTimeMillis() / 1000;
-        Long a=(UA << 56) | ((time << 16) & 0xFFFFFFFF) | seqid & 0xFFFF;
-        long a1=UA<<56;
+        Long a = (UA << 56) | ((time << 16) & 0xFFFFFFFF) | seqid & 0xFFFF;
+        long a1 = UA << 56;
         System.out.println(a);
 
 
-        long a2=((time << 16) & 0xFFFFFFFF);
+        long a2 = ((time << 16) & 0xFFFFFFFF);
         System.out.println(a2);
-        long a3=a1 | a2;
+        long a3 = a1 | a2;
         System.out.println(a3);
-        System.out.println(a1+a2);
+        System.out.println(a1 + a2);
         System.out.println(UUID.randomUUID());
 
-        System.out.println( System.currentTimeMillis());
-        System.out.println( System.currentTimeMillis());
-        System.out.println( System.currentTimeMillis() );
-        System.out.println( System.currentTimeMillis() );
-        System.out.println( System.currentTimeMillis() );
-
+        System.out.println(System.currentTimeMillis());
+        System.out.println(System.currentTimeMillis());
+        System.out.println(System.currentTimeMillis());
+        System.out.println(System.currentTimeMillis());
+        System.out.println(System.currentTimeMillis());
 
 
     }
 
     @Test
-    public void test_13(){
-        int count=4;
-        while(count>0){
+    public void test_13() {
+        int count = 4;
+        while (count > 0) {
             System.out.println(count);
             count--;
         }
     }
+
     @Test
-    public void test_14(){
+    public void test_14() {
+        CouponDO couponDO = new CouponDO();
+    }
+
+    @Test
+    public void test_15() throws ParseException {
+        CouponDO couponDO = new CouponDO();
+        couponDO.setEndDate(DateUtils.parse("2018-01-01 12:12:12"));
+        CouponDO couponDO1 = new CouponDO();
+        couponDO1.setEndDate(DateUtils.parse("2018-01-01 12:12:12"));
+        List<CouponDO> list = Lists.newArrayList(couponDO, couponDO1);
+        list=null;
+        System.out.println(list.size());
+        CouponDO couponDO2 = list.stream().max((k, v) -> {
+            return k.getEndDate().compareTo(v.getEndDate());
+        }).get();
+        //
+        System.out.println(DateUtils.format(couponDO2.getEndDate()));
+    }
+
+    @Test
+    public void test_16() throws ParseException {
+        Date date1=DateUtils.parse("2018-01-01 01:12:12");
+        Date date2=DateUtils.parse("2018-01-01 12:12:10");
+        System.out.println(DateUtils.dayDiff(date2,date1));
+        System.out.println(DateUtils.dayDiff(date1,date2));
+        System.out.println(DateUtils.getStartOfDay(date1));
+        System.out.println(DateUtils.plusDay(date1,12));
+        System.out.println(DateUtils.subDay(date2, 1));
+    }
+    @Test
+    public void test_17(){
         CouponDO couponDO=new CouponDO();
+        couponDO.setAmount(BigDecimal.TEN);
+        List<CouponDO>couponDOS=Lists.newArrayList();
+        List<CouponDO> couponDOS1=couponDOS.stream().filter(e->{
+            return e.getAmount().compareTo(new BigDecimal(1))==1;
+        }).collect(toList());
+
+        Optional<CouponDO> couponDOS2=couponDOS.stream().filter(e->{
+            return e.getAmount().compareTo(new BigDecimal(1))==1;
+        }).findFirst();
+        System.out.println(couponDOS2);
+        System.out.println(couponDOS1);
+    }
+
+    @Test
+    public void test_18(){
+        Integer i=null;
+        Integer j=1;
+        System.out.println(i.equals(j));
     }
 }
