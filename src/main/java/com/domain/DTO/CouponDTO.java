@@ -10,4 +10,5 @@ import lombok.Data;
 @Data
 public class CouponDTO {
     String couponCode;
+    String storeNo;
 }

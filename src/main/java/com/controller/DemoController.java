@@ -24,7 +24,7 @@ public class DemoController {
 
     @RequestMapping("/sleep")
     public String sleep() {
-        int count=100;
+        int count = 100;
         for (int i = 0; i < count; i++) {
             try {
                 Thread.sleep(1000);
@@ -35,12 +35,11 @@ public class DemoController {
         }
         return "success";
     }
+
     /**
-     *
      * @param name
      * @param password
-     * @return
-     * //applicaton/x-www-form-urlencoded
+     * @return //applicaton/x-www-form-urlencoded
      */
     @PostMapping("/login")
     public Map<String, Object> login(@RequestParam String name, @RequestParam String password) {
@@ -48,5 +47,10 @@ public class DemoController {
         resultMap.put("name", name);
         resultMap.put("password", password);
         return resultMap;
+    }
+
+    @RequestMapping("/hellohello")
+    public String hellohello() {
+        return "haha";
     }
 }

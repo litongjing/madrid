@@ -9,11 +9,22 @@
        channel,reserved1,reserved2,reserved3,reserved4
     </sql>
 
+    <!--<select id="selectCoupon" resultType="CouponDO">-->
+        <!--select-->
+        <!--<include refid="couponlist_field"/>-->
+        <!--from crm_ticket_couponlist-->
+        <!--where 1=1-->
+        <!--<if test="couponCode !=null and couponCode !=''">and couponcode=#{couponCode}</if>-->
+    <!--</select>-->
+
+
     <select id="selectCoupon" resultType="CouponDO">
         select
         <include refid="couponlist_field"/>
         from crm_ticket_couponlist
-        where 1=1
-        <if test="couponCode !=null and couponCode !=''">and couponcode=#{couponCode}</if>
+        <where>
+            <if test="couponCode !=null and couponCode !=''">and couponcode=#{couponCode}</if>
+            <if test="storeNo != null and storeNo!=''">and storeNo=#{storeNo}</if>
+        </where>
     </select>
 </mapper>

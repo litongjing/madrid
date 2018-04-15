@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.domain.DO.CouponDO;
 import com.google.common.collect.Lists;
+import com.sun.jmx.snmp.tasks.ThreadService;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.util.Strings;
 import org.junit.Test;
@@ -20,6 +21,7 @@ import java.security.PrivateKey;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
 /**
@@ -223,5 +225,53 @@ public class Util {
     @Test
     public void test_14(){
         CouponDO couponDO=new CouponDO();
+    }
+
+
+    @Test
+    public void test_15(){
+        ExecutorService executorService= Executors.newFixedThreadPool(2);
+        ArrayList<Future<Boolean>> results = new ArrayList<Future<Boolean>>();
+        for(int i=0;i<1000;i=i+100){
+            results.add(executorService.submit(new singleThread()));
+        }
+        for (Future<Boolean> r : results) {
+            try {
+                System.out.println(r.get());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+     private class singleThread implements Callable<Boolean>{
+        @Override
+        public Boolean call() throws Exception {
+            Thread.sleep(1000);
+            System.out.println(new Date());
+            return true;
+        }
+    }
+
+    @Test
+    public void test_16(){
+        ExecutorService executorService=Executors.newFixedThreadPool(1);
+        executorService.submit(new msgThread("188"));
+    }
+    private class msgThread implements Callable<Boolean>{
+        String phone;
+
+        msgThread(String phone) {
+            this.phone = phone;
+        }
+
+        @Override
+        public Boolean call() throws Exception {
+            System.out.println(phone);
+            return true;
+        }
     }
 }

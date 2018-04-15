@@ -36,7 +36,8 @@ public class CouponManagerTest {
     @Test
     public void test_selectCoupon() {
         CouponDTO couponDTO = new CouponDTO();
-        couponDTO.setCouponCode("5899937701012244");
+        //couponDTO.setCouponCode("5899937701012244");
+        couponDTO.setStoreNo("HZ09");
         System.out.println(couponManager.selectCoupon(couponDTO));
     }
 
