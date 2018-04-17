@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.domain.DO.CouponDO;
 import com.google.common.collect.Lists;
+import com.google.common.util.concurrent.RateLimiter;
 import com.sun.jmx.snmp.tasks.ThreadService;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.util.Strings;
@@ -272,6 +273,14 @@ public class Util {
         public Boolean call() throws Exception {
             System.out.println(phone);
             return true;
+        }
+    }
+    @Test
+    public void test_17() {
+        RateLimiter rateLimiter = RateLimiter.create(2);
+        while (true) {
+            System.out.println("~~~" + rateLimiter.acquire());
+            System.out.println(new Date());
         }
     }
 }
