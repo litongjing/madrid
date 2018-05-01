@@ -283,4 +283,38 @@ public class Util {
             System.out.println(new Date());
         }
     }
+    @Test
+    public void test_18(){
+        CouponDO couponDO=new CouponDO();
+        couponDO.setAccount("123");
+        System.out.println(couponDO.getActionNo()==null);
+    }
+
+    @Test
+    public void test_19() {
+        List<Integer> list = Lists.newArrayList();
+        list.add(0);
+        list.add(0);
+        list.add(0);
+        Integer a = list.stream()
+                .filter(e -> e != 0)
+                .max((v, k) -> v.compareTo(k)
+                ).orElse(2);
+        System.out.println(a);
+    };
+    @Test
+    public void test_20(){
+        List<Integer>list=Lists.newArrayList();
+        list.add(5);
+        list.add(4);
+        list.add(1);
+        list.add(3);
+        list.add(2);
+        System.out.println(list);
+//        Collections.sort(list);
+
+        Collections.sort(list,(v,k)->v-k);
+
+        System.out.println(list);
+    }
 }
