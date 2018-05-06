@@ -44,6 +44,7 @@ public class CouponManager {
     public CampnouCouponDO selectCampnouCouponNew(String id){
         CampnouCouponDO campnouCouponDO=new CampnouCouponDO();
         campnouCouponDO.setId(id);
+//        int i=1/0;
         return couponMapperNew.selectOne(campnouCouponDO);
     }
 }

@@ -74,8 +74,9 @@ public class CouponManagerTest {
 
     @Test
     public void test_tk_mybatis() {
-        System.out.println(couponManager.selectCampnouCouponNew("4"));
-        System.out.println(couponManager);
+        CampnouCouponDO campnouCouponDO = couponManager.selectCampnouCouponNew("4");
+
+        System.out.println(campnouCouponDO);
     }
 
     @Test
