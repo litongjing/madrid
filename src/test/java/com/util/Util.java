@@ -5,8 +5,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.domain.DO.CouponDO;
 import com.google.common.collect.Lists;
 import com.google.common.util.concurrent.RateLimiter;
-import com.sun.jmx.snmp.tasks.ThreadService;
-import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.util.Strings;
 import org.junit.Test;
 import org.springframework.util.StopWatch;
@@ -107,6 +105,10 @@ public class Util {
         Date date = sf.parse("2018-03-01");
         System.out.println(date.getTime());
         System.out.println(JSON.parseObject(null));
+
+        Date date1=new Date();
+        System.out.println(new SimpleDateFormat("yyyyMMdd").format(new Date()));
+        System.out.println(new SimpleDateFormat("yyyyMMdd").parse("20180505"));
         //sdfk
     }
 
@@ -316,5 +318,39 @@ public class Util {
         Collections.sort(list,(v,k)->v-k);
 
         System.out.println(list);
+    }
+    @Test
+    public void test_05101645(){
+        test_array(12,"1","1","2","3","4");
+    }
+
+    public void test_array(Integer i,String i1,String ...str){
+        List<String> list=Lists.newArrayList(str);
+        System.out.println(list);
+    }
+
+    /**
+     * thread start run 启动线程
+     */
+    @Test
+    public void test_qqq(){
+        Thread t=new Thread(()->{
+            for(int i=0;i<100;i++){
+                System.out.println(1);
+            }
+        });
+
+        Thread t1=new Thread(()->{
+            for(int j=0;j<100;j++){
+                System.out.println(2);
+            }
+        });
+        t.start();
+        t1.start();
+    }
+
+    @Test
+    public void test_random(){
+        System.out.println(new Random().nextBoolean());
     }
 }
