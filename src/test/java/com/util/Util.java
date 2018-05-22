@@ -389,10 +389,20 @@ public class Util {
 
     @Test
     public void test_ThreadPool() {
-        LinkedBlockingQueue linkedBlockingQueue = new LinkedBlockingQueue(10);
-        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(5, 20, 10, MINUTES, linkedBlockingQueue);
+//        LinkedBlockingQueue linkedBlockingQueue = new LinkedBlockingQueue(10);
+//        BlockingQueue<Runnable> workQueue = new ArrayBlockingQueue<>(10);
+//        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(5, 20, 10, TimeUnit.MINUTES, workQueue);
+
+        int corePoolSize = 5;
+        int maximumPoolSize = 20;
+        long keepAliveTime = 10;
+        TimeUnit unit = TimeUnit.MINUTES;
+//        BlockingQueue<Runnable> workQueue = new ArrayBlockingQueue<Runnable>();
+        ThreadPoolExecutor threadPoolExecutor= new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime, unit,  new ArrayBlockingQueue<Runnable>(10));
+        RateLimiter rateLimiter=RateLimiter.create(1);
         List<Future<String>> list = Lists.newArrayList();
-        for (int j = 0; j < 10000; j++) {
+        for (int j = 0; j < 1000000; j++) {
+            rateLimiter.acquire();
             list.add(threadPoolExecutor.submit(() -> {
                 for (int i = 0; i < 20; i++) {
                     System.out.println(new Date());
