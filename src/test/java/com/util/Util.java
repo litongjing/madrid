@@ -21,6 +21,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import static java.util.concurrent.TimeUnit.MINUTES;
@@ -398,13 +399,18 @@ public class Util {
         long keepAliveTime = 10;
         TimeUnit unit = TimeUnit.MINUTES;
 //        BlockingQueue<Runnable> workQueue = new ArrayBlockingQueue<Runnable>();
-        ThreadPoolExecutor threadPoolExecutor= new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime, unit,  new ArrayBlockingQueue<Runnable>(10));
-        RateLimiter rateLimiter=RateLimiter.create(1);
+        ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime, unit, new ArrayBlockingQueue<Runnable>(10));
+        RateLimiter rateLimiter = RateLimiter.create(10);
         List<Future<String>> list = Lists.newArrayList();
         for (int j = 0; j < 1000000; j++) {
             rateLimiter.acquire();
             list.add(threadPoolExecutor.submit(() -> {
+                System.out.println(Thread.currentThread().getName());
                 for (int i = 0; i < 20; i++) {
+                    if (i == 10) {
+                        System.out.println("j     :");
+                        break;
+                    }
                     System.out.println(new Date());
                 }
                 return "ok";
@@ -436,7 +442,7 @@ public class Util {
         }
         list.stream().forEach(e -> {
             try {
-                System.out.println(" " +e.get());
+                System.out.println(" " + e.get());
             } catch (InterruptedException e1) {
                 e1.printStackTrace();
             } catch (ExecutionException e1) {
@@ -444,5 +450,41 @@ public class Util {
             }
         });
         System.out.println("123");
+    }
+
+    @Test
+    public void test_max() throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date1 = sdf.parse("2018-12-12 12:12:12");
+        Date date2 = sdf.parse("2017-12-12 12:12:12");
+        Date date3 = sdf.parse("2016-12-12 12:12:12");
+        Date date4 = sdf.parse("2015-12-12 12:12:12");
+        Date date5 = sdf.parse("2014-12-12 12:12:12");
+
+        Date date6 = sdf.parse("2016-12-12 12:12:12");
+        List<Date> list = Lists.newArrayList(date2, date3, date4, date5);
+        System.out.println(list.stream().filter(e -> {
+            return e.compareTo(date6) == -1;
+        }).max((k, v) -> k.compareTo(v)).orElse(sdf.parse("2018-12-12 12:12:12")));
+    }
+
+    @Test
+    public void test_automic() {
+        AtomicInteger queryTotal = new AtomicInteger();
+        System.out.println(queryTotal.addAndGet(10));
+        System.out.println(queryTotal.addAndGet(10));
+    }
+
+    @Test
+    public void test() {
+        for (int i = 0; i < 256; i++) {
+            System.out.println(String.format("%04d", i));
+        }
+    }
+
+    @Test
+    public void test_reduce(){
+        List<Boolean>list=Lists.newArrayList(false,true,false,true);
+        System.out.println(list.stream().reduce((x, y) -> x && y).get());
     }
 }
